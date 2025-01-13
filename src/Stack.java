@@ -1,22 +1,22 @@
 import java.util.ArrayList;
 
-public class Stack {
+public class Stack<T> {
 
-    private final ArrayList<Object> stack;
+    private final ArrayList<T> stack;
 
     public Stack() {
         this.stack = new ArrayList<>();
     }
 
-    public void push(Object o) {
+    public void push(T o) {
         stack.add(o);
     }
 
-    public Object pop() {
+    public T pop() {
         return stack.remove(stack.size() - 1);
     }
 
-    public Object top() {
+    public T top() {
         return stack.get(stack.size() - 1);
     }
 
