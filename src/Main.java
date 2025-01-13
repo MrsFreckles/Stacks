@@ -43,41 +43,42 @@ public class Main {
 
         for(int i = 0; i < input.length(); i++) {
             if(input.charAt(i) != '('){
-                if(input.charAt(i) != '+' || input.charAt(i) != '-' || input.charAt(i) != '*' || input.charAt(i) != '/'){
-                    while (input.charAt(i) != '+' || input.charAt(i) != '-' || input.charAt(i) != '*' || input.charAt(i) != '/') {
+                if(input.charAt(i) == ')'){
+                    int result = 0;
+                    int a = num.top();
+                    num.pop();
+                    int b = num.top();
+                    num.pop();
+                    if(operation.top().equals("+")){
+                        result = b + a;
+                        operation.pop();
+                        num.push(result);
+                    }else if(operation.top().equals("-")){
+                        result = b - a;
+                        operation.pop();
+                        num.push(result);
+                    }else if(operation.top().equals("*")){
+                        result = b * a;
+                        operation.pop();
+                        num.push(result);
+                    }else if(operation.top().equals("/")){
+                        result = b / a;
+                        operation.pop();
+                        num.push(result);
+                    }
+                }else if(input.charAt(i) != '+' && input.charAt(i) != '-' && input.charAt(i) != '*' && input.charAt(i) != '/'){
+                    while (input.charAt(i) != '+' && input.charAt(i) != '-' && input.charAt(i) != '*' && input.charAt(i) != '/' && input.charAt(i) != ')') {
                         String temp = input.charAt(i) + "";
                         num.push(Integer.parseInt(temp));
                         i++;
                     }
-                } else {
+                } else if (input.charAt(i) == '+' || input.charAt(i) == '-' || input.charAt(i) == '*' || input.charAt(i) == '/') {
+                    System.out.println(input.charAt(i) + "");
                     operation.push(input.charAt(i) + "");
                 }
             }
-            if(input.charAt(i) == ')'){
-                int result = 0;
-                int a = num.top();
-                num.pop();
-                int b = num.top();
-                num.pop();
-                if(operation.pop().equals("+")){
-                    result = a + b;
-                    operation.pop();
-                }
-                if(operation.pop().equals("-")){
-                    result = a - b;
-                    operation.pop();
-                }
-                if(operation.pop().equals("*")){
-                    result = a * b;
-                    operation.pop();
-                }
-                if(operation.pop().equals("/")){
-                    result = a / b;
-                    operation.pop();
-                }
-                num.push(result);
-            }
         }
+        System.out.println(num.top().toString());
         return num.top();
     }
 }
