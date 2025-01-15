@@ -4,7 +4,7 @@ public class Main {
         System.out.println(palindromPruefen("Keller"));
         System.out.println(palindromPruefen("Anna"));
         System.out.println(palindromPruefen("bei liese sei lieb"));
-        System.out.println(matheStacken("((2*(5-2))+8)"));
+        System.out.println(matheStacken("(1+1)"));
     }
 
     public static void printKeller() {
@@ -42,43 +42,39 @@ public class Main {
         Stack<Integer> num = new Stack();
 
         for(int i = 0; i < input.length(); i++) {
-            if(input.charAt(i) != '('){
-                if(input.charAt(i) == ')'){
-                    int result = 0;
-                    int a = num.top();
-                    num.pop();
-                    int b = num.top();
-                    num.pop();
-                    if(operation.top().equals("+")){
-                        result = b + a;
+            if(input.charAt(i) != '(') {
+                i++;
+            }
+            while (input.charAt(i) != '+' && input.charAt(i) != '-' && input.charAt(i) != '*' && input.charAt(i) != '/' && input.charAt(i) != ')' && input.charAt(i) != '(') {
+                String temp = input.charAt(i) + "";
+                System.out.println(input.charAt(i) + "");
+                num.push(Integer.parseInt(temp));
+                i++;
+            }
+            if (input.charAt(i) == '+' || input.charAt(i) == '-' || input.charAt(i) == '*' || input.charAt(i) == '/') {
+                System.out.println(input.charAt(i) + "");
+                operation.push(input.charAt(i) + "");
+            }
+            if (input.charAt(i) == ')') {
+                int a = num.top();
+                num.pop();
+                int b = num.top();
+                num.pop();
+                if (!operation.isEmpty()) {
+                    if (operation.top().equals("+")) {
+                        num.push(b + a);
                         operation.pop();
-                        num.push(result);
-                    }else if(operation.top().equals("-")){
-                        result = b - a;
-                        operation.pop();
-                        num.push(result);
-                    }else if(operation.top().equals("*")){
-                        result = b * a;
-                        operation.pop();
-                        num.push(result);
-                    }else if(operation.top().equals("/")){
-                        result = b / a;
-                        operation.pop();
-                        num.push(result);
+                    } else {
+                        System.out.println("operationstack is empty");
                     }
-                }else if(input.charAt(i) != '+' && input.charAt(i) != '-' && input.charAt(i) != '*' && input.charAt(i) != '/'){
-                    while (input.charAt(i) != '+' && input.charAt(i) != '-' && input.charAt(i) != '*' && input.charAt(i) != '/' && input.charAt(i) != ')') {
-                        String temp = input.charAt(i) + "";
-                        num.push(Integer.parseInt(temp));
-                        i++;
-                    }
-                } else if (input.charAt(i) == '+' || input.charAt(i) == '-' || input.charAt(i) == '*' || input.charAt(i) == '/') {
-                    System.out.println(input.charAt(i) + "");
-                    operation.push(input.charAt(i) + "");
                 }
             }
         }
-        System.out.println(num.top().toString());
+        if(num.isEmpty()){
+            System.out.println("numstack is empty");
+        } else {
+            System.out.println(num.top().toString());
+        }
         return num.top();
     }
 }
