@@ -13,7 +13,9 @@ public class Stack<T> {
     }
 
     public T pop() {
-        return stack.remove(stack.size() - 1);
+        if (!stack.isEmpty())
+            return stack.remove(stack.size() - 1);
+        return null;
     }
 
     public T top() {
